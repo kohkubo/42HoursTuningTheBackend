@@ -1,8 +1,8 @@
 CREATE INDEX record_index
     ON record (updated_at ASC, record_id DESC);
 
-CREATE INDEX record_item_file
-    ON index_item (item_id ASC);
+CREATE INDEX index_item
+    ON record_item_file (item_id ASC);
 
 ALTER TABLE group_member ADD INDEX index_group_member(user_id);
 
