@@ -259,7 +259,7 @@ const tomeActive = async (req, res) => {
   let searchRecordQs =
     'select * from record where status = "open" and (category_id, application_group) in (';
   let recordCountQs =
-    'select count(*) from record where status = "open" and (category_id, application_group) in (';
+    'select count(record_id) from record where status = "open" and (category_id, application_group) in (';
   const param = [];
 
   for (let i = 0; i < targetCategoryAppGroupList.length; i++) {
@@ -290,7 +290,7 @@ const tomeActive = async (req, res) => {
   const searchGroupQs = 'select * from group_info where group_id = ?';
   const searchThumbQs =
     'select * from record_item_file where linked_record_id = ? order by item_id asc limit 1';
-  const countQs = 'select count(*) from record_comment where linked_record_id = ?';
+  const countQs = 'select count(comment_id) from record_comment where linked_record_id = ?';
   const searchLastQs = 'select * from record_last_access where user_id = ? and record_id = ?';
 
   for (let i = 0; i < recordResult.length; i++) {
@@ -337,7 +337,7 @@ const tomeActive = async (req, res) => {
 
     const [countResult] = await pool.query(countQs, [recordId]);
     if (countResult.length === 1) {
-      commentCount = countResult[0]['count(*)'];
+      commentCount = countResult[0]['count(comment_id)'];
     }
 
     const [lastResult] = await pool.query(searchLastQs, [user.user_id, recordId]);
@@ -367,7 +367,7 @@ const tomeActive = async (req, res) => {
 
   const [recordCountResult] = await pool.query(recordCountQs, param);
   if (recordCountResult.length === 1) {
-    count = recordCountResult[0]['count(*)'];
+    count = recordCountResult[0]['count(record_id)'];
   }
 
   res.send({ count: count, items: items });
@@ -403,7 +403,7 @@ const allActive = async (req, res) => {
   const searchGroupQs = 'select * from group_info where group_id = ?';
   const searchThumbQs =
     'select * from record_item_file where linked_record_id = ? order by item_id asc limit 1';
-  const countQs = 'select count(*) from record_comment where linked_record_id = ?';
+  const countQs = 'select count(comment_id) from record_comment where linked_record_id = ?';
   const searchLastQs = 'select * from record_last_access where user_id = ? and record_id = ?';
 
   for (let i = 0; i < recordResult.length; i++) {
@@ -450,7 +450,7 @@ const allActive = async (req, res) => {
 
     const [countResult] = await pool.query(countQs, [recordId]);
     if (countResult.length === 1) {
-      commentCount = countResult[0]['count(*)'];
+      commentCount = countResult[0]['count(comment_id)'];
     }
 
     const [lastResult] = await pool.query(searchLastQs, [user.user_id, recordId]);
@@ -478,11 +478,11 @@ const allActive = async (req, res) => {
     items[i] = resObj;
   }
 
-  const recordCountQs = 'select count(*) from record where status = "open"';
+  const recordCountQs = 'select count(record_id) from record where status = "open"';
 
   const [recordCountResult] = await pool.query(recordCountQs);
   if (recordCountResult.length === 1) {
-    count = recordCountResult[0]['count(*)'];
+    count = recordCountResult[0]['count(record_id)'];
   }
 
   res.send({ count: count, items: items });
@@ -518,7 +518,7 @@ const allClosed = async (req, res) => {
   const searchGroupQs = 'select * from group_info where group_id = ?';
   const searchThumbQs =
     'select * from record_item_file where linked_record_id = ? order by item_id asc limit 1';
-  const countQs = 'select count(*) from record_comment where linked_record_id = ?';
+  const countQs = 'select count(comment_id) from record_comment where linked_record_id = ?';
   const searchLastQs = 'select * from record_last_access where user_id = ? and record_id = ?';
 
   for (let i = 0; i < recordResult.length; i++) {
@@ -565,7 +565,7 @@ const allClosed = async (req, res) => {
 
     const [countResult] = await pool.query(countQs, [recordId]);
     if (countResult.length === 1) {
-      commentCount = countResult[0]['count(*)'];
+      commentCount = countResult[0]['count(comment_id)'];
     }
 
     const [lastResult] = await pool.query(searchLastQs, [user.user_id, recordId]);
@@ -593,11 +593,11 @@ const allClosed = async (req, res) => {
     items[i] = resObj;
   }
 
-  const recordCountQs = 'select count(*) from record where status = "closed"';
+  const recordCountQs = 'select count(record_id) from record where status = "closed"';
 
   const [recordCountResult] = await pool.query(recordCountQs);
   if (recordCountResult.length === 1) {
-    count = recordCountResult[0]['count(*)'];
+    count = recordCountResult[0]['count(record_id)'];
   }
 
   res.send({ count: count, items: items });
@@ -633,7 +633,7 @@ const mineActive = async (req, res) => {
   const searchGroupQs = 'select * from group_info where group_id = ?';
   const searchThumbQs =
     'select * from record_item_file where linked_record_id = ? order by item_id asc limit 1';
-  const countQs = 'select count(*) from record_comment where linked_record_id = ?';
+  const countQs = 'select count(record_comment) from record_comment where linked_record_id = ?';
   const searchLastQs = 'select * from record_last_access where user_id = ? and record_id = ?';
 
   for (let i = 0; i < recordResult.length; i++) {
@@ -680,7 +680,7 @@ const mineActive = async (req, res) => {
 
     const [countResult] = await pool.query(countQs, [recordId]);
     if (countResult.length === 1) {
-      commentCount = countResult[0]['count(*)'];
+      commentCount = countResult[0]['count(record_comment)'];
     }
 
     const [lastResult] = await pool.query(searchLastQs, [user.user_id, recordId]);
@@ -708,11 +708,11 @@ const mineActive = async (req, res) => {
     items[i] = resObj;
   }
 
-  const recordCountQs = 'select count(*) from record where created_by = ? and status = "open"';
+  const recordCountQs = 'select count(record_id) from record where created_by = ? and status = "open"';
 
   const [recordCountResult] = await pool.query(recordCountQs, [user.user_id]);
   if (recordCountResult.length === 1) {
-    count = recordCountResult[0]['count(*)'];
+    count = recordCountResult[0]['count(record_id)'];
   }
 
   res.send({ count: count, items: items });
