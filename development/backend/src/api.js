@@ -633,7 +633,7 @@ const mineActive = async (req, res) => {
   const searchGroupQs = 'select * from group_info where group_id = ?';
   const searchThumbQs =
     'select * from record_item_file where linked_record_id = ? order by item_id asc limit 1';
-  const countQs = 'select count(record_comment) from record_comment where linked_record_id = ?';
+  const countQs = 'select count(comment_id) from record_comment where linked_record_id = ?';
   const searchLastQs = 'select * from record_last_access where user_id = ? and record_id = ?';
 
   for (let i = 0; i < recordResult.length; i++) {
@@ -680,7 +680,7 @@ const mineActive = async (req, res) => {
 
     const [countResult] = await pool.query(countQs, [recordId]);
     if (countResult.length === 1) {
-      commentCount = countResult[0]['count(record_comment)'];
+      commentCount = countResult[0]['count(comment_id)'];
     }
 
     const [lastResult] = await pool.query(searchLastQs, [user.user_id, recordId]);
