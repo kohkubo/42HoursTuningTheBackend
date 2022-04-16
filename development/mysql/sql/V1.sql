@@ -1,5 +1,5 @@
 CREATE INDEX record_index
-    ON record (updated_at ASC, record_id DESC);
+    ON record (updated_at ASC, record_id DESC, created_by, status);
 
 
 ALTER TABLE group_member ADD INDEX index_group_member(user_id);
@@ -16,7 +16,7 @@ ALTER TABLE record_last_access ADD INDEX index_item(user_id, record_id);
 
 ALTER TABLE session ADD INDEX index_session(value);
 
-ALTER TABLE session ADD INDEX index_record_comment(linked_record_id);
+ALTER TABLE record_comment ADD INDEX index_record_comment(linked_record_id);
 
 
 
