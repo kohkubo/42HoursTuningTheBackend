@@ -1,7 +1,6 @@
 CREATE INDEX record_index
     ON record (updated_at ASC, record_id DESC, created_by, status);
 
-
 ALTER TABLE group_member ADD INDEX index_group_member(user_id);
 
 ALTER TABLE user ADD INDEX index_user(user_id);
