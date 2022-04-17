@@ -41,4 +41,7 @@ services:
         PMA_HOST: 'mysql'
         PMA_USER: 'root'
       ports:
-        - "8088:80"
+        - target: 80
+          published: 3000
+          protocol: tcp
+
