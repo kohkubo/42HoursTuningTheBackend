@@ -1,5 +1,5 @@
 
-ALTER TABLE record_item_file ADD INDEX index_item (linked_record_id);
+ALTER TABLE record_item_file ADD INDEX index_item(linked_record_id);
 
 ALTER TABLE group_member ADD INDEX index_group_member(user_id);
 
